@@ -1,0 +1,17 @@
+[package]
+name = "sdk_leg"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[[bin]]
+name = "sdk_leg"
+path = "src/main.rs"
+
+[workspace]
+resolver = "3"
+
+[dependencies]
+limitless-exchange-rust-sdk = { git = "https://github.com/limitless-labs-group/limitless-exchange-rust-sdk", rev = "b1ad2e108e96f05b615d513d3f32237a775177f8" }
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "signal", "sync"] }

@@ -1,0 +1,7 @@
+/target/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+__pycache__/
+/CLAUDE.local.md

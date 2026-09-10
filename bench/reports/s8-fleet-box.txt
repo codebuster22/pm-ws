@@ -1,0 +1,1320 @@
+# pm-ws S8 full-fleet benchmark (fleet-sharded)
+host_label: Linux proof host (32-core x86_64, 62 GiB RAM)
+generated_at: 2026-09-06T09:38:36Z
+uname: Linux Encrypted8532 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+commit: 59b7550
+workdir: /home/codebuster22/pm-ws-bench/fleet-box
+control_socket: /tmp/pmws-bench-31562.sock
+fleet_markets: 547
+target_shards: 20
+markets_per_shard: 28
+overflow_shard: 19
+overflow_capacity: 13
+duplicates_dropped: 0
+seconds: 900
+lease_ttl_ms: 30000
+metrics_port: 19090
+rest_calls_total: 3
+
+plan_shards: 547 unique markets (0 duplicate line(s) dropped), markets_per_shard=28, target_shards=20, overflow_capacity=13
+plan_shards: 33 fast-recurring slug(s) matched -5-min-/-hourly-/up-or-down
+plan_shards: fast-recurring slugs sorted into shard(s) {0, 2, 3, 4, 5, 7, 9, 10, 11, 13, 14, 15, 19} -- daemon.rs sorts `markets` before chunking, so input order cannot place them; this is where they landed, not where anything asked them to land
+
+## commands
+cargo build --release --locked
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so /home/codebuster22/pm-ws/target/release/pmwsd --config /home/codebuster22/pm-ws-bench/fleet-box/pmwsd.toml
+/home/codebuster22/pm-ws/target/release/pmwsctl --socket /tmp/pmws-bench-31562.sock status
+curl -fsS 127.0.0.1:19090/metrics > /home/codebuster22/pm-ws-bench/fleet-box/metrics-<point>.prom
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-0.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 0 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-0.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-0.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-1.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 1 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-1.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-1.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-2.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 2 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-2.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-2.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-3.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 3 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-3.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-3.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-4.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 4 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-4.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-4.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-5.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 5 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-5.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-5.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-6.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 6 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-6.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-6.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-7.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 7 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-7.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-7.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-8.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 8 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-8.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-8.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-9.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 9 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-9.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-9.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-10.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 10 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-10.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-10.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-11.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 11 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-11.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-11.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-12.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 12 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-12.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-12.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-13.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 13 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-13.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-13.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-14.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 14 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-14.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-14.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-15.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 15 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-15.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-15.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-16.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 16 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-16.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-16.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-17.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 17 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-17.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-17.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so python3 /home/codebuster22/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-18.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 18 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-18.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-18.err &
+PMWS_LIB=/home/codebuster22/pm-ws/target/release/libpm_ws.so node /home/codebuster22/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-31562.sock --slugs /home/codebuster22/pm-ws-bench/fleet-box/shard-19.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 19 of 20" > /home/codebuster22/pm-ws-bench/fleet-box/consumer-19.log 2> /home/codebuster22/pm-ws-bench/fleet-box/consumer-19.err &
+python3 /home/codebuster22/pm-ws/bench/discover_markets.py --page1-only --known /home/codebuster22/pm-ws-bench/fleet-markets-box.txt --known /home/codebuster22/pm-ws-bench/fleet-box/discovered-new-slugs.txt
+
+## daemon
+start_rss_kib: 1074688
+start_attachments_refused: 0
+start_shards_connected: 20/20
+start_segment_markets_total: 547
+start_shard_0_queue_age_us: samples=34 p50=64 p99=98 max=98
+start_shard_0_attachments: 0
+start_shard_1_queue_age_us: samples=24 p50=128 p99=143 max=143
+start_shard_1_attachments: 0
+start_shard_2_queue_age_us: samples=292 p50=64 p99=227 max=227
+start_shard_2_attachments: 0
+start_shard_3_queue_age_us: samples=18 p50=64 p99=85 max=85
+start_shard_3_attachments: 0
+start_shard_4_queue_age_us: samples=6 p50=64 p99=134 max=134
+start_shard_4_attachments: 0
+start_shard_5_queue_age_us: samples=38 p50=64 p99=168 max=168
+start_shard_5_attachments: 0
+start_shard_6_queue_age_us: samples=33 p50=64 p99=109 max=109
+start_shard_6_attachments: 0
+start_shard_7_queue_age_us: samples=27 p50=128 p99=176 max=176
+start_shard_7_attachments: 0
+start_shard_8_queue_age_us: samples=13 p50=128 p99=181 max=181
+start_shard_8_attachments: 0
+start_shard_9_queue_age_us: samples=20 p50=64 p99=190 max=190
+start_shard_9_attachments: 0
+start_shard_10_queue_age_us: samples=28 p50=127 p99=127 max=127
+start_shard_10_attachments: 0
+start_shard_11_queue_age_us: samples=31 p50=64 p99=96 max=96
+start_shard_11_attachments: 0
+start_shard_12_queue_age_us: samples=21 p50=64 p99=194 max=194
+start_shard_12_attachments: 0
+start_shard_13_queue_age_us: samples=17 p50=64 p99=129 max=129
+start_shard_13_attachments: 0
+start_shard_14_queue_age_us: samples=32 p50=64 p99=136 max=136
+start_shard_14_attachments: 0
+start_shard_15_queue_age_us: samples=16 p50=32 p99=82 max=82
+start_shard_15_attachments: 0
+start_shard_16_queue_age_us: samples=16 p50=112 p99=112 max=112
+start_shard_16_attachments: 0
+start_shard_17_queue_age_us: samples=9 p50=64 p99=77 max=77
+start_shard_17_attachments: 0
+start_shard_18_queue_age_us: samples=21 p50=128 p99=152 max=152
+start_shard_18_attachments: 0
+start_shard_19_queue_age_us: samples=12 p50=128 p99=145 max=145
+start_shard_19_attachments: 0
+start_markets_reported: 547
+start_markets_leased: 0
+start_leases_total: 0
+middle_rss_kib: 1074688
+middle_attachments_refused: 0
+middle_shards_connected: 20/20
+middle_segment_markets_total: 549
+middle_shard_0_queue_age_us: samples=913 p50=64 p99=224 max=224
+middle_shard_0_attachments: 28
+middle_shard_1_queue_age_us: samples=28 p50=128 p99=143 max=143
+middle_shard_1_attachments: 28
+middle_shard_2_queue_age_us: samples=4015 p50=128 p99=512 max=876
+middle_shard_2_attachments: 28
+middle_shard_3_queue_age_us: samples=30 p50=64 p99=85 max=85
+middle_shard_3_attachments: 28
+middle_shard_4_queue_age_us: samples=362 p50=64 p99=207 max=207
+middle_shard_4_attachments: 28
+middle_shard_5_queue_age_us: samples=1294 p50=64 p99=256 max=363
+middle_shard_5_attachments: 28
+middle_shard_6_queue_age_us: samples=3179 p50=64 p99=256 max=370
+middle_shard_6_attachments: 28
+middle_shard_7_queue_age_us: samples=265 p50=64 p99=219 max=219
+middle_shard_7_attachments: 28
+middle_shard_8_queue_age_us: samples=13 p50=128 p99=181 max=181
+middle_shard_8_attachments: 28
+middle_shard_9_queue_age_us: samples=106 p50=64 p99=229 max=229
+middle_shard_9_attachments: 28
+middle_shard_10_queue_age_us: samples=28 p50=127 p99=127 max=127
+middle_shard_10_attachments: 28
+middle_shard_11_queue_age_us: samples=813 p50=64 p99=256 max=303
+middle_shard_11_attachments: 28
+middle_shard_12_queue_age_us: samples=90 p50=64 p99=194 max=194
+middle_shard_12_attachments: 28
+middle_shard_13_queue_age_us: samples=37 p50=64 p99=129 max=129
+middle_shard_13_attachments: 28
+middle_shard_14_queue_age_us: samples=126 p50=128 p99=512 max=546
+middle_shard_14_attachments: 28
+middle_shard_15_queue_age_us: samples=504 p50=128 p99=256 max=308
+middle_shard_15_attachments: 28
+middle_shard_16_queue_age_us: samples=16 p50=112 p99=112 max=112
+middle_shard_16_attachments: 28
+middle_shard_17_queue_age_us: samples=13 p50=64 p99=115 max=115
+middle_shard_17_attachments: 28
+middle_shard_18_queue_age_us: samples=189 p50=64 p99=238 max=238
+middle_shard_18_attachments: 28
+middle_shard_19_queue_age_us: samples=792 p50=64 p99=256 max=346
+middle_shard_19_attachments: 17
+middle_markets_reported: 549
+middle_markets_leased: 546
+middle_leases_total: 546
+end_rss_kib: 1074944
+end_attachments_refused: 0
+end_shards_connected: 20/20
+end_segment_markets_total: 547
+end_shard_0_queue_age_us: samples=1203 p50=64 p99=224 max=224
+end_shard_0_attachments: 28
+end_shard_1_queue_age_us: samples=49 p50=128 p99=143 max=143
+end_shard_1_attachments: 28
+end_shard_2_queue_age_us: samples=5096 p50=128 p99=512 max=876
+end_shard_2_attachments: 28
+end_shard_3_queue_age_us: samples=49 p50=64 p99=86 max=86
+end_shard_3_attachments: 28
+end_shard_4_queue_age_us: samples=580 p50=64 p99=207 max=207
+end_shard_4_attachments: 28
+end_shard_5_queue_age_us: samples=1668 p50=64 p99=256 max=363
+end_shard_5_attachments: 28
+end_shard_6_queue_age_us: samples=7455 p50=64 p99=256 max=370
+end_shard_6_attachments: 28
+end_shard_7_queue_age_us: samples=335 p50=64 p99=219 max=219
+end_shard_7_attachments: 28
+end_shard_8_queue_age_us: samples=14 p50=128 p99=181 max=181
+end_shard_8_attachments: 28
+end_shard_9_queue_age_us: samples=187 p50=64 p99=229 max=229
+end_shard_9_attachments: 28
+end_shard_10_queue_age_us: samples=36 p50=127 p99=127 max=127
+end_shard_10_attachments: 28
+end_shard_11_queue_age_us: samples=1207 p50=64 p99=256 max=303
+end_shard_11_attachments: 28
+end_shard_12_queue_age_us: samples=191 p50=64 p99=194 max=194
+end_shard_12_attachments: 28
+end_shard_13_queue_age_us: samples=57 p50=64 p99=129 max=129
+end_shard_13_attachments: 28
+end_shard_14_queue_age_us: samples=253 p50=128 p99=256 max=546
+end_shard_14_attachments: 28
+end_shard_15_queue_age_us: samples=991 p50=64 p99=256 max=308
+end_shard_15_attachments: 28
+end_shard_16_queue_age_us: samples=20 p50=112 p99=112 max=112
+end_shard_16_attachments: 28
+end_shard_17_queue_age_us: samples=18 p50=64 p99=115 max=115
+end_shard_17_attachments: 28
+end_shard_18_queue_age_us: samples=901 p50=64 p99=128 max=238
+end_shard_18_attachments: 28
+end_shard_19_queue_age_us: samples=7306 p50=64 p99=256 max=398
+end_shard_19_attachments: 23
+end_markets_reported: 547
+end_markets_leased: 0
+end_leases_total: 0
+
+## start-vs-end diff
+released_mid_run_count: 0
+newly_leased_count: 0
+
+## middle-vs-end diff
+released_mid_run_count: 546
+  released: 100-thieves-vs-loud-1788652804862 shard=0
+  released: 2026-mens-us-open-winner-tennis-1784794788358 shard=0
+  released: 2026-womens-us-open-winner-tennis-1784794835561 shard=0
+  released: 202627-english-premier-league-winner-1779725958467 shard=0
+  released: 9z-vs-5star-1788577202565 shard=0
+  released: 9z-vs-5star-map-1-winner-1788577500973 shard=0
+  released: 9z-vs-5star-map-2-winner-1788577500991 shard=0
+  released: academico-viseu-and-vitoria-sc-both-to-score-1788600626431 shard=0
+  released: academico-viseu-and-vitoria-sc-have-3-or-more-total-goals-1788600603498 shard=0
+  released: aek-athens-fc-and-lask-linz-both-to-score-1788175613585 shard=0
+  released: aek-athens-fc-and-lask-linz-have-3-or-more-total-goals-1788175604659 shard=0
+  released: aerospace-and-defense-etf-ita-up-or-down-daily-1788552000 shard=0
+  released: alaves-and-osasuna-both-to-score-1788082202865 shard=0
+  released: alaves-and-osasuna-have-3-or-more-total-goals-1788082211253 shard=0
+  released: alex-michelsen-vs-tomas-martin-etcheverry-1788577205285 shard=0
+  released: alex-michelsen-vs-tomas-martin-etcheverry-37-or-more-total-games-1788577203670 shard=0
+  released: alex-michelsen-vs-tomas-martin-etcheverry-4-or-more-total-sets-1788577202551 shard=0
+  released: alexander-zverev-vs-luciano-darderi-1788674406382 shard=0
+  released: alexander-zverev-vs-luciano-darderi-37-or-more-total-games-1788674405315 shard=0
+  released: alexander-zverev-vs-luciano-darderi-4-or-more-total-sets-1788674402412 shard=0
+newly_leased_count: 0
+
+## consumer: shard 0 (python)
+consumer shard 0 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 0 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.052
+anchor_market: 100-thieves-vs-loud-1788652804862
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 10
+samples_kept: 748
+percentiles: withheld, only 748 kept samples (floor is 1000)
+wakes: 809
+wakes_per_second: 0.899
+timeouts: 8724
+dirty_delivered: 1165
+dirty_delivered_ours: 1165
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 11.558
+control_stall_max_ms: 1.639
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 773
+daemon_percentiles: withheld, only 773 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 748
+consumer_percentiles: withheld, only 748 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 1 (typescript)
+consumer shard 1 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 1 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: -0.993
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.012
+anchor_market: anna-kalinskaya-vs-emma-navarro-3-or-more-total-sets-1788580802930
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 6
+samples_kept: 22
+percentiles: withheld, only 22 kept samples (floor is 1000)
+wakes: 24
+wakes_per_second: 0.027
+timeouts: 8976
+dirty_delivered: 24
+dirty_delivered_ours: 24
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 3.442
+control_stall_max_ms: 0.293
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 44
+daemon_percentiles: withheld, only 44 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 22
+consumer_percentiles: withheld, only 22 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 2 (python)
+consumer shard 2 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 2 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.057
+anchor_market: bayern-munchen-and-bodoglimt-both-to-score-1788175620446
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 18
+samples_kept: 3168
+p50_us: 298
+p95_us: 699
+p99_us: 964
+p99.9_us: 1827
+max_us: 4184
+wakes: 3551
+wakes_per_second: 3.945
+timeouts: 8081
+dirty_delivered: 4287
+dirty_delivered_ours: 4287
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 29
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 29
+control_stall_total_ms: 10.774
+control_stall_max_ms: 1.920
+resolutions_observed: 6
+leases_released_on_resolution: 2
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 3195
+daemon_p50_us: 97
+daemon_p95_us: 221
+daemon_p99_us: 310
+daemon_p99.9_us: 394
+daemon_max_us: 437
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 3168
+consumer_p50_us: 190
+consumer_p95_us: 486
+consumer_p99_us: 715
+consumer_p99.9_us: 1523
+consumer_max_us: 4066
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 3 (typescript)
+consumer shard 3 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 3 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: -0.992
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.090
+anchor_market: btc-up-or-down-weekly-1788148800
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 5
+samples_kept: 23
+percentiles: withheld, only 23 kept samples (floor is 1000)
+wakes: 25
+wakes_per_second: 0.028
+timeouts: 8976
+dirty_delivered: 30
+dirty_delivered_ours: 30
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 5.475
+control_stall_max_ms: 0.654
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 39
+daemon_percentiles: withheld, only 39 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 23
+consumer_percentiles: withheld, only 23 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 4 (python)
+consumer shard 4 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 4 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.037
+anchor_market: daniil-medvedev-vs-frances-tiafoe-37-or-more-total-games-1788577203572
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 3
+samples_kept: 563
+percentiles: withheld, only 563 kept samples (floor is 1000)
+wakes: 569
+wakes_per_second: 0.632
+timeouts: 8749
+dirty_delivered: 568
+dirty_delivered_ours: 568
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 7.775
+control_stall_max_ms: 0.954
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 567
+daemon_percentiles: withheld, only 567 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 563
+consumer_percentiles: withheld, only 563 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 5 (typescript)
+consumer shard 5 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 5 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: -1.984
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.079
+anchor_market: efl-cup-chelsea-vs-leeds-1788339610716
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 7
+samples_kept: 883
+percentiles: withheld, only 883 kept samples (floor is 1000)
+wakes: 943
+wakes_per_second: 1.048
+timeouts: 8656
+dirty_delivered: 963
+dirty_delivered_ours: 963
+rescans: 0
+samples_skipped: 0
+samples_discarded: 3
+samples_discarded_clock_step: 33
+samples_after_control: 29
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 29
+control_stall_total_ms: 5.097
+control_stall_max_ms: 0.381
+resolutions_observed: 6
+leases_released_on_resolution: 2
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 935
+daemon_percentiles: withheld, only 935 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 883
+consumer_percentiles: withheld, only 883 kept samples (floor is 1000)
+consumer_samples_discarded: 3
+consumer_samples_discarded_clock_step: 33
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 6 (python)
+consumer shard 6 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 6 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.048
+anchor_market: ethereum-all-time-high-by-1775136208587
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 7
+samples_kept: 4681
+p50_us: 143
+p95_us: 341
+p99_us: 534
+p99.9_us: 800
+max_us: 1623
+wakes: 5039
+wakes_per_second: 5.599
+timeouts: 7831
+dirty_delivered: 7415
+dirty_delivered_ours: 7415
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 27
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 8.545
+control_stall_max_ms: 2.072
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 4698
+daemon_p50_us: 40
+daemon_p95_us: 107
+daemon_p99_us: 156
+daemon_p99.9_us: 305
+daemon_max_us: 376
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 4681
+consumer_p50_us: 101
+consumer_p95_us: 253
+consumer_p99_us: 393
+consumer_p99.9_us: 704
+consumer_max_us: 1562
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 7 (typescript)
+consumer shard 7 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 7 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: 0
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.049
+anchor_market: g2-vs-astralis-map-1-winner-1788609901496
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 12
+samples_kept: 227
+percentiles: withheld, only 227 kept samples (floor is 1000)
+wakes: 250
+wakes_per_second: 0.278
+timeouts: 8888
+dirty_delivered: 307
+dirty_delivered_ours: 307
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 14
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 28
+control_stall_total_ms: 5.126
+control_stall_max_ms: 0.735
+resolutions_observed: 3
+leases_released_on_resolution: 1
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 266
+daemon_percentiles: withheld, only 266 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 227
+consumer_percentiles: withheld, only 227 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 14
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 8 (python)
+consumer shard 8 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 8 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.091
+anchor_market: iran-charges-hormuz-fees-by-1787660046607
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 0
+samples_kept: 0
+percentiles: withheld, only 0 kept samples (floor is 1000)
+wakes: 1
+wakes_per_second: 0.001
+timeouts: 8984
+dirty_delivered: 0
+dirty_delivered_ours: 0
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 27
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 12.567
+control_stall_max_ms: 2.977
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 11
+daemon_percentiles: withheld, only 11 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 0
+consumer_percentiles: withheld, only 0 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 9 (typescript)
+consumer shard 9 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 9 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: -0.99
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.086
+anchor_market: laliga-valencia-vs-barcelona-1788080406480
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 5
+samples_kept: 106
+percentiles: withheld, only 106 kept samples (floor is 1000)
+wakes: 124
+wakes_per_second: 0.138
+timeouts: 8936
+dirty_delivered: 153
+dirty_delivered_ours: 153
+rescans: 0
+samples_skipped: 0
+samples_discarded: 3
+samples_discarded_clock_step: 11
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 3.252
+control_stall_max_ms: 0.233
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 135
+daemon_percentiles: withheld, only 135 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 106
+consumer_percentiles: withheld, only 106 kept samples (floor is 1000)
+consumer_samples_discarded: 3
+consumer_samples_discarded_clock_step: 11
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 10 (python)
+consumer shard 10 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 10 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.063
+anchor_market: lorient-and-toulouse-both-to-score-1788600610905
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 3
+samples_kept: 6
+percentiles: withheld, only 6 kept samples (floor is 1000)
+wakes: 8
+wakes_per_second: 0.009
+timeouts: 8981
+dirty_delivered: 7
+dirty_delivered_ours: 7
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 8.205
+control_stall_max_ms: 0.977
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 32
+daemon_percentiles: withheld, only 32 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 6
+consumer_percentiles: withheld, only 6 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 11 (typescript)
+consumer shard 11 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 11 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: -1.988
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.076
+anchor_market: namibia-vs-south-africa-1788336002663
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 7
+samples_kept: 769
+percentiles: withheld, only 769 kept samples (floor is 1000)
+wakes: 862
+wakes_per_second: 0.958
+timeouts: 8715
+dirty_delivered: 1171
+dirty_delivered_ours: 1171
+rescans: 0
+samples_skipped: 0
+samples_discarded: 11
+samples_discarded_clock_step: 15
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 3.580
+control_stall_max_ms: 0.228
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 816
+daemon_percentiles: withheld, only 816 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 769
+consumer_percentiles: withheld, only 769 kept samples (floor is 1000)
+consumer_samples_discarded: 11
+consumer_samples_discarded_clock_step: 15
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 12 (python)
+consumer shard 12 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 12 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.044
+anchor_market: paris-fc-and-lyon-have-3-or-more-total-goals-1788600609748
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 10
+samples_kept: 131
+percentiles: withheld, only 131 kept samples (floor is 1000)
+wakes: 135
+wakes_per_second: 0.150
+timeouts: 8926
+dirty_delivered: 160
+dirty_delivered_ours: 160
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 11.527
+control_stall_max_ms: 2.761
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 146
+daemon_percentiles: withheld, only 146 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 131
+consumer_percentiles: withheld, only 131 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 13 (typescript)
+consumer shard 13 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 13 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: 0.992
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.060
+anchor_market: racing-santander-and-alaves-have-3-or-more-total-goals-1788600612818
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 7
+samples_kept: 36
+percentiles: withheld, only 36 kept samples (floor is 1000)
+wakes: 39
+wakes_per_second: 0.043
+timeouts: 8966
+dirty_delivered: 38
+dirty_delivered_ours: 38
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 1
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 4.836
+control_stall_max_ms: 0.652
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 52
+daemon_percentiles: withheld, only 52 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 36
+consumer_percentiles: withheld, only 36 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 1
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 14 (python)
+consumer shard 14 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 14 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.087
+anchor_market: serie-a-venezia-vs-fiorentina-1788512402738
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 11
+samples_kept: 205
+percentiles: withheld, only 205 kept samples (floor is 1000)
+wakes: 209
+wakes_per_second: 0.232
+timeouts: 8899
+dirty_delivered: 219
+dirty_delivered_ours: 219
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 4.671
+control_stall_max_ms: 0.486
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 229
+daemon_percentiles: withheld, only 229 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 205
+consumer_percentiles: withheld, only 205 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 15 (typescript)
+consumer shard 15 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 15 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: 0
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.038
+anchor_market: stripe-next-round-valuation-1749833631617
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 7
+samples_kept: 745
+percentiles: withheld, only 745 kept samples (floor is 1000)
+wakes: 799
+wakes_per_second: 0.888
+timeouts: 8655
+dirty_delivered: 967
+dirty_delivered_ours: 967
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 29
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 3.252
+control_stall_max_ms: 0.291
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 789
+daemon_percentiles: withheld, only 789 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 745
+consumer_percentiles: withheld, only 745 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 29
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 16 (python)
+consumer shard 16 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 16 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.031
+anchor_market: ucl-manchester-united-vs-sabah-fa-1788175390502
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 2
+samples_kept: 2
+percentiles: withheld, only 2 kept samples (floor is 1000)
+wakes: 4
+wakes_per_second: 0.004
+timeouts: 8983
+dirty_delivered: 3
+dirty_delivered_ours: 3
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 11.240
+control_stall_max_ms: 1.796
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 17
+daemon_percentiles: withheld, only 17 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 2
+consumer_percentiles: withheld, only 2 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 17 (typescript)
+consumer shard 17 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 17 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: 0.994
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.007
+anchor_market: vfb-stuttgart-and-viking-both-to-score-1788175615967
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 2
+samples_kept: 7
+percentiles: withheld, only 7 kept samples (floor is 1000)
+wakes: 9
+wakes_per_second: 0.010
+timeouts: 8982
+dirty_delivered: 8
+dirty_delivered_ours: 8
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 179
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 3.444
+control_stall_max_ms: 0.226
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 14
+daemon_percentiles: withheld, only 14 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 7
+consumer_percentiles: withheld, only 7 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 18 (python)
+consumer shard 18 (python) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), python binding consumer, shard 18 of 20
+consumer: bench_consumer.py
+runtime: python 3.12.3
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.069
+anchor_market: will-arc-launch-a-token-by-1786355719959
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 4
+samples_kept: 712
+percentiles: withheld, only 712 kept samples (floor is 1000)
+wakes: 727
+wakes_per_second: 0.808
+timeouts: 8695
+dirty_delivered: 871
+dirty_delivered_ours: 871
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 6.299
+control_stall_max_ms: 1.488
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 732
+daemon_percentiles: withheld, only 732 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 712
+consumer_percentiles: withheld, only 712 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 19 (typescript)
+consumer shard 19 (typescript) exit 0
+label: Linux proof host (32-core x86_64, 62 GiB RAM), typescript binding consumer, shard 19 of 20
+consumer: bench_consumer.ts
+runtime: node v22.23.2
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 907
+clock_divergence_ns_per_s: 0.993
+clock_steps_detected: 30
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.019
+anchor_market: will-the-us-acquire-part-of-greenland-in-2026-1787749529287
+markets_leased_peak: 19
+markets_held: 23
+markets_seen: 23
+samples_kept: 3937
+p50_us: 154
+p95_us: 356
+p99_us: 534
+p99.9_us: 887
+max_us: 1060
+wakes: 4664
+wakes_per_second: 5.182
+timeouts: 8145
+dirty_delivered: 5895
+dirty_delivered_ours: 5895
+rescans: 0
+samples_skipped: 0
+samples_discarded: 1
+samples_discarded_clock_step: 170
+samples_after_control: 116
+transient_event_faults: 0
+continuity_losses: 911
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 26
+control_stall_total_ms: 6.533
+control_stall_max_ms: 1.104
+resolutions_observed: 4
+leases_released_on_resolution: 4
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 8
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 4124
+daemon_p50_us: 66
+daemon_p95_us: 154
+daemon_p99_us: 221
+daemon_p99.9_us: 347
+daemon_max_us: 455
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 3937
+consumer_p50_us: 88
+consumer_p95_us: 214
+consumer_p99_us: 361
+consumer_p99.9_us: 604
+consumer_max_us: 730
+consumer_samples_discarded: 1
+consumer_samples_discarded_clock_step: 170
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## deviation from ship wording
+S8 ship wording says one Python and one TypeScript consumer; a consumer session maps one
+shard's segment, so a 20-shard fleet is observed by 10 Python + 10 TypeScript single-segment
+consumers, one per shard.

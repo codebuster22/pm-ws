@@ -1,0 +1,10 @@
+{
+  "name": "pmws-sdk-harness-ts",
+  "private": true,
+  "version": "0.0.0",
+  "description": "S8c ts-sdk leg: official @limitless-exchange/sdk consumer, isolated from the daemon's dependency graph.",
+  "type": "module",
+  "dependencies": {
+    "@limitless-exchange/sdk": "1.1.0"
+  }
+}

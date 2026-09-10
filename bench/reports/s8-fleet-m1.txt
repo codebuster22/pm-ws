@@ -1,0 +1,1332 @@
+# pm-ws S8 full-fleet benchmark (fleet-sharded)
+host_label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5)
+generated_at: 2026-09-06T09:20:54Z
+uname: Darwin Mihirs-MacBook-Pro-2.local 25.5.0 Darwin Kernel Version 25.5.0: Tue Jun  9 22:26:46 PDT 2026; root:xnu-12377.121.10~1/RELEASE_ARM64_T8103 arm64
+commit: 59b7550
+workdir: /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b
+control_socket: /tmp/pmws-bench-62397.sock
+fleet_markets: 546
+target_shards: 20
+markets_per_shard: 28
+overflow_shard: 19
+overflow_capacity: 14
+duplicates_dropped: 1
+seconds: 900
+lease_ttl_ms: 30000
+metrics_port: 9090
+rest_calls_total: 3
+
+plan_shards: 546 unique markets (1 duplicate line(s) dropped), markets_per_shard=28, target_shards=20, overflow_capacity=14
+plan_shards: 33 fast-recurring slug(s) matched -5-min-/-hourly-/up-or-down
+plan_shards: fast-recurring slugs sorted into shard(s) {0, 2, 4, 5, 7, 9, 10, 11, 13, 14, 15, 19} -- daemon.rs sorts `markets` before chunking, so input order cannot place them; this is where they landed, not where anything asked them to land
+
+## commands
+cargo build --release --locked
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/pmwsd --config /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/pmwsd.toml
+/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/pmwsctl --socket /tmp/pmws-bench-62397.sock status
+curl -fsS 127.0.0.1:9090/metrics > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/metrics-<point>.prom
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-0.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 0 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-0.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-0.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-1.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 1 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-1.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-1.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-2.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 2 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-2.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-2.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-3.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 3 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-3.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-3.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-4.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 4 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-4.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-4.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-5.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 5 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-5.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-5.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-6.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 6 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-6.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-6.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-7.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 7 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-7.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-7.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-8.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 8 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-8.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-8.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-9.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 9 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-9.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-9.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-10.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 10 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-10.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-10.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-11.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 11 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-11.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-11.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-12.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 12 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-12.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-12.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-13.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 13 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-13.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-13.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-14.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 14 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-14.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-14.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-15.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 15 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-15.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-15.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-16.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 16 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-16.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-16.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-17.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 17 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-17.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-17.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.py --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-18.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 18 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-18.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-18.err &
+PMWS_LIB=/Users/0xmihir/Desktop/chain-labs/titus/pm-ws/target/release/libpm_ws.dylib node /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/examples/bench_consumer.ts --control /tmp/pmws-bench-62397.sock --slugs /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/shard-19.slugs --seconds 900 --lease-ttl-ms 30000 --spin-micros 0 --label "M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 19 of 20" > /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-19.log 2> /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/consumer-19.err &
+python3 /Users/0xmihir/Desktop/chain-labs/titus/pm-ws/bench/discover_markets.py --page1-only --known /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-markets-m1b.txt --known /private/tmp/claude-501/-Users-0xmihir-Desktop-chain-labs-titus-pm-ws/05af5062-02d7-41a3-bcbe-e7462f78ef0b/scratchpad/fleet-m1b/discovered-new-slugs.txt
+
+## daemon
+start_rss_kib: 1094640
+start_attachments_refused: 0
+start_shards_connected: 20/20
+start_segment_markets_total: 546
+start_shard_0_queue_age_us: samples=27 p50=512 p99=631 max=631
+start_shard_0_attachments: 0
+start_shard_1_queue_age_us: samples=24 p50=512 p99=744 max=744
+start_shard_1_attachments: 0
+start_shard_2_queue_age_us: samples=191 p50=512 p99=2048 max=2075
+start_shard_2_attachments: 0
+start_shard_3_queue_age_us: samples=18 p50=512 p99=742 max=742
+start_shard_3_attachments: 0
+start_shard_4_queue_age_us: samples=5 p50=364 p99=364 max=364
+start_shard_4_attachments: 0
+start_shard_5_queue_age_us: samples=48 p50=128 p99=260 max=260
+start_shard_5_attachments: 0
+start_shard_6_queue_age_us: samples=24 p50=460 p99=460 max=460
+start_shard_6_attachments: 0
+start_shard_7_queue_age_us: samples=28 p50=949 p99=949 max=949
+start_shard_7_attachments: 0
+start_shard_8_queue_age_us: samples=13 p50=512 p99=684 max=684
+start_shard_8_attachments: 0
+start_shard_9_queue_age_us: samples=17 p50=512 p99=624 max=624
+start_shard_9_attachments: 0
+start_shard_10_queue_age_us: samples=28 p50=918 p99=918 max=918
+start_shard_10_attachments: 0
+start_shard_11_queue_age_us: samples=23 p50=512 p99=750 max=750
+start_shard_11_attachments: 0
+start_shard_12_queue_age_us: samples=21 p50=256 p99=496 max=496
+start_shard_12_attachments: 0
+start_shard_13_queue_age_us: samples=16 p50=512 p99=905 max=905
+start_shard_13_attachments: 0
+start_shard_14_queue_age_us: samples=26 p50=128 p99=302 max=302
+start_shard_14_attachments: 0
+start_shard_15_queue_age_us: samples=16 p50=512 p99=853 max=853
+start_shard_15_attachments: 0
+start_shard_16_queue_age_us: samples=17 p50=512 p99=766 max=766
+start_shard_16_attachments: 0
+start_shard_17_queue_age_us: samples=8 p50=128 p99=129 max=129
+start_shard_17_attachments: 0
+start_shard_18_queue_age_us: samples=22 p50=512 p99=797 max=797
+start_shard_18_attachments: 0
+start_shard_19_queue_age_us: samples=11 p50=512 p99=769 max=769
+start_shard_19_attachments: 0
+start_markets_reported: 546
+start_markets_leased: 0
+start_leases_total: 0
+middle_rss_kib: 1050672
+middle_attachments_refused: 0
+middle_shards_connected: 20/20
+middle_segment_markets_total: 548
+middle_shard_0_queue_age_us: samples=601 p50=256 p99=2048 max=4436
+middle_shard_0_attachments: 28
+middle_shard_1_queue_age_us: samples=43 p50=256 p99=892 max=892
+middle_shard_1_attachments: 28
+middle_shard_2_queue_age_us: samples=8199 p50=512 p99=2048 max=48462
+middle_shard_2_attachments: 28
+middle_shard_3_queue_age_us: samples=31 p50=512 p99=742 max=742
+middle_shard_3_attachments: 28
+middle_shard_4_queue_age_us: samples=470 p50=512 p99=2470 max=2470
+middle_shard_4_attachments: 28
+middle_shard_5_queue_age_us: samples=2256 p50=256 p99=2048 max=33024
+middle_shard_5_attachments: 28
+middle_shard_6_queue_age_us: samples=3025 p50=256 p99=2048 max=8244
+middle_shard_6_attachments: 28
+middle_shard_7_queue_age_us: samples=788 p50=256 p99=4096 max=11913
+middle_shard_7_attachments: 28
+middle_shard_8_queue_age_us: samples=13 p50=512 p99=684 max=684
+middle_shard_8_attachments: 28
+middle_shard_9_queue_age_us: samples=83 p50=256 p99=12073 max=12073
+middle_shard_9_attachments: 28
+middle_shard_10_queue_age_us: samples=39 p50=512 p99=918 max=918
+middle_shard_10_attachments: 28
+middle_shard_11_queue_age_us: samples=44 p50=256 p99=750 max=750
+middle_shard_11_attachments: 28
+middle_shard_12_queue_age_us: samples=119 p50=256 p99=678 max=678
+middle_shard_12_attachments: 28
+middle_shard_13_queue_age_us: samples=27 p50=256 p99=905 max=905
+middle_shard_13_attachments: 28
+middle_shard_14_queue_age_us: samples=843 p50=128 p99=2048 max=4001
+middle_shard_14_attachments: 28
+middle_shard_15_queue_age_us: samples=179 p50=512 p99=1879 max=1879
+middle_shard_15_attachments: 28
+middle_shard_16_queue_age_us: samples=17 p50=512 p99=766 max=766
+middle_shard_16_attachments: 28
+middle_shard_17_queue_age_us: samples=8 p50=128 p99=129 max=129
+middle_shard_17_attachments: 28
+middle_shard_18_queue_age_us: samples=87 p50=256 p99=4982 max=4982
+middle_shard_18_attachments: 28
+middle_shard_19_queue_age_us: samples=2125 p50=512 p99=4096 max=11819
+middle_shard_19_attachments: 16
+middle_markets_reported: 548
+middle_markets_leased: 546
+middle_leases_total: 546
+end_rss_kib: 1051232
+end_attachments_refused: 0
+end_shards_connected: 20/20
+end_segment_markets_total: 546
+end_shard_0_queue_age_us: samples=1755 p50=256 p99=2048 max=4436
+end_shard_0_attachments: 28
+end_shard_1_queue_age_us: samples=68 p50=256 p99=892 max=892
+end_shard_1_attachments: 28
+end_shard_2_queue_age_us: samples=9962 p50=512 p99=2048 max=48462
+end_shard_2_attachments: 28
+end_shard_3_queue_age_us: samples=53 p50=256 p99=742 max=742
+end_shard_3_attachments: 28
+end_shard_4_queue_age_us: samples=969 p50=512 p99=2048 max=2813
+end_shard_4_attachments: 28
+end_shard_5_queue_age_us: samples=3115 p50=256 p99=2048 max=33024
+end_shard_5_attachments: 28
+end_shard_6_queue_age_us: samples=5142 p50=256 p99=2048 max=8244
+end_shard_6_attachments: 28
+end_shard_7_queue_age_us: samples=1132 p50=256 p99=4096 max=11913
+end_shard_7_attachments: 28
+end_shard_8_queue_age_us: samples=18 p50=256 p99=684 max=684
+end_shard_8_attachments: 28
+end_shard_9_queue_age_us: samples=196 p50=256 p99=1024 max=12073
+end_shard_9_attachments: 28
+end_shard_10_queue_age_us: samples=55 p50=256 p99=918 max=918
+end_shard_10_attachments: 28
+end_shard_11_queue_age_us: samples=918 p50=256 p99=2048 max=2750
+end_shard_11_attachments: 28
+end_shard_12_queue_age_us: samples=174 p50=256 p99=1024 max=4141
+end_shard_12_attachments: 28
+end_shard_13_queue_age_us: samples=52 p50=256 p99=905 max=905
+end_shard_13_attachments: 28
+end_shard_14_queue_age_us: samples=1465 p50=128 p99=2048 max=52265
+end_shard_14_attachments: 28
+end_shard_15_queue_age_us: samples=457 p50=256 p99=2029 max=2029
+end_shard_15_attachments: 28
+end_shard_16_queue_age_us: samples=22 p50=512 p99=766 max=766
+end_shard_16_attachments: 28
+end_shard_17_queue_age_us: samples=11 p50=128 p99=161 max=161
+end_shard_17_attachments: 28
+end_shard_18_queue_age_us: samples=100 p50=256 p99=1024 max=4982
+end_shard_18_attachments: 28
+end_shard_19_queue_age_us: samples=5562 p50=512 p99=2048 max=11819
+end_shard_19_attachments: 22
+end_markets_reported: 546
+end_markets_leased: 0
+end_leases_total: 0
+
+## start-vs-end diff
+released_mid_run_count: 0
+newly_leased_count: 0
+
+## middle-vs-end diff
+released_mid_run_count: 546
+  released: 100-thieves-vs-loud-1788652804862 shard=0
+  released: 2026-mens-us-open-winner-tennis-1784794788358 shard=0
+  released: 2026-womens-us-open-winner-tennis-1784794835561 shard=0
+  released: 202627-english-premier-league-winner-1779725958467 shard=0
+  released: 9z-vs-5star-1788577202565 shard=0
+  released: 9z-vs-5star-map-1-winner-1788577500973 shard=0
+  released: 9z-vs-5star-map-2-winner-1788577500991 shard=0
+  released: academico-viseu-and-vitoria-sc-both-to-score-1788600626431 shard=0
+  released: academico-viseu-and-vitoria-sc-have-3-or-more-total-goals-1788600603498 shard=0
+  released: aek-athens-fc-and-lask-linz-both-to-score-1788175613585 shard=0
+  released: aek-athens-fc-and-lask-linz-have-3-or-more-total-goals-1788175604659 shard=0
+  released: aerospace-and-defense-etf-ita-up-or-down-daily-1788552000 shard=0
+  released: alaves-and-osasuna-both-to-score-1788082202865 shard=0
+  released: alaves-and-osasuna-have-3-or-more-total-goals-1788082211253 shard=0
+  released: alex-michelsen-vs-tomas-martin-etcheverry-1788577205285 shard=0
+  released: alex-michelsen-vs-tomas-martin-etcheverry-37-or-more-total-games-1788577203670 shard=0
+  released: alexander-zverev-vs-luciano-darderi-1788674406382 shard=0
+  released: alexander-zverev-vs-luciano-darderi-37-or-more-total-games-1788674405315 shard=0
+  released: alexander-zverev-vs-luciano-darderi-4-or-more-total-sets-1788674402412 shard=0
+  released: alliance-vs-faze-1788598801128 shard=0
+newly_leased_count: 0
+
+## consumer: shard 0 (python)
+consumer shard 0 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 0 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.080
+anchor_market: 100-thieves-vs-loud-1788652804862
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 12
+samples_kept: 721
+percentiles: withheld, only 721 kept samples (floor is 1000)
+wakes: 1001
+wakes_per_second: 1.112
+timeouts: 8465
+dirty_delivered: 1727
+dirty_delivered_ours: 1727
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 123.729
+control_stall_max_ms: 22.160
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 746
+daemon_percentiles: withheld, only 746 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 721
+consumer_percentiles: withheld, only 721 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 1 (typescript)
+consumer shard 1 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 1 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15680.597
+clock_steps_detected: 1
+clock_calibrations_rejected: 1
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.068
+anchor_market: anthropic-acquired-before-2027-1764856036744
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 12
+samples_kept: 37
+percentiles: withheld, only 37 kept samples (floor is 1000)
+wakes: 42
+wakes_per_second: 0.047
+timeouts: 8814
+dirty_delivered: 43
+dirty_delivered_ours: 43
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.082
+control_stall_max_ms: 0.092
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 59
+daemon_percentiles: withheld, only 59 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 37
+consumer_percentiles: withheld, only 37 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 2 (python)
+consumer shard 2 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 2 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.035
+anchor_market: bayern-munchen-and-bodoglimt-have-3-or-more-total-goals-1788175611446
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 19
+samples_kept: 4093
+p50_us: 1023
+p95_us: 2348
+p99_us: 3526
+p99.9_us: 29654
+max_us: 55527
+wakes: 4251
+wakes_per_second: 4.723
+timeouts: 7587
+dirty_delivered: 8048
+dirty_delivered_ours: 8048
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 30
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 29
+control_stall_total_ms: 121.618
+control_stall_max_ms: 21.929
+resolutions_observed: 6
+leases_released_on_resolution: 2
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 4121
+daemon_p50_us: 392
+daemon_p95_us: 1118
+daemon_p99_us: 1661
+daemon_p99.9_us: 3495
+daemon_max_us: 43603
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 4093
+consumer_p50_us: 570
+consumer_p95_us: 1583
+consumer_p99_us: 2584
+consumer_p99.9_us: 17238
+consumer_max_us: 44246
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 3 (typescript)
+consumer shard 3 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 3 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15682.47
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.063
+anchor_market: bundesliga-2027-champion-1784640860934
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 11
+samples_kept: 28
+percentiles: withheld, only 28 kept samples (floor is 1000)
+wakes: 32
+wakes_per_second: 0.036
+timeouts: 8815
+dirty_delivered: 34
+dirty_delivered_ours: 34
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.915
+control_stall_max_ms: 0.124
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 45
+daemon_percentiles: withheld, only 45 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 28
+consumer_percentiles: withheld, only 28 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 4 (python)
+consumer shard 4 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 4 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.092
+anchor_market: daniil-medvedev-vs-frances-tiafoe-4-or-more-total-sets-1788577201783
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 2
+samples_kept: 719
+percentiles: withheld, only 719 kept samples (floor is 1000)
+wakes: 847
+wakes_per_second: 0.941
+timeouts: 8486
+dirty_delivered: 955
+dirty_delivered_ours: 955
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 135.326
+control_stall_max_ms: 21.879
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 722
+daemon_percentiles: withheld, only 722 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 719
+consumer_percentiles: withheld, only 719 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 5 (typescript)
+consumer shard 5 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 5 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 900
+clock_divergence_ns_per_s: 15645.186
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.070
+anchor_market: efl-cup-crystal-palace-vs-middlesbrough-1788253214435
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 11
+samples_kept: 1686
+p50_us: 680
+p95_us: 1448
+p99_us: 2466
+p99.9_us: 38181
+max_us: 50885
+wakes: 1898
+wakes_per_second: 2.109
+timeouts: 8120
+dirty_delivered: 2237
+dirty_delivered_ours: 2237
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 29
+control_stall_total_ms: 2.021
+control_stall_max_ms: 0.457
+resolutions_observed: 6
+leases_released_on_resolution: 2
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 1701
+daemon_p50_us: 338
+daemon_p95_us: 907
+daemon_p99_us: 1593
+daemon_p99.9_us: 7736
+daemon_max_us: 7840
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 1686
+consumer_p50_us: 316
+consumer_p95_us: 633
+consumer_p99_us: 1252
+consumer_p99.9_us: 33018
+consumer_max_us: 50377
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 6 (python)
+consumer shard 6 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 6 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.022
+anchor_market: everton-and-manchester-united-both-to-score-1788082219379
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 13
+samples_kept: 2153
+p50_us: 482
+p95_us: 1212
+p99_us: 2343
+p99.9_us: 42002
+max_us: 50145
+wakes: 2704
+wakes_per_second: 3.004
+timeouts: 7877
+dirty_delivered: 5091
+dirty_delivered_ours: 5091
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 124.400
+control_stall_max_ms: 22.050
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 2171
+daemon_p50_us: 189
+daemon_p95_us: 645
+daemon_p99_us: 1044
+daemon_p99.9_us: 3201
+daemon_max_us: 7567
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 2153
+consumer_p50_us: 267
+consumer_p95_us: 709
+consumer_p99_us: 1641
+consumer_p99.9_us: 41854
+consumer_max_us: 50035
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 7 (typescript)
+consumer shard 7 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 7 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 900
+clock_divergence_ns_per_s: 15671.519
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.060
+anchor_market: g2-vs-astralis-map-2-winner-1788609901513
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 17
+samples_kept: 692
+percentiles: withheld, only 692 kept samples (floor is 1000)
+wakes: 847
+wakes_per_second: 0.941
+timeouts: 8485
+dirty_delivered: 1095
+dirty_delivered_ours: 1095
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.696
+control_stall_max_ms: 0.124
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 716
+daemon_percentiles: withheld, only 716 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 692
+consumer_percentiles: withheld, only 692 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 8 (python)
+consumer shard 8 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 8 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.027
+anchor_market: israel-closes-its-airspace-by-1787663971719
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 4
+samples_kept: 3
+percentiles: withheld, only 3 kept samples (floor is 1000)
+wakes: 5
+wakes_per_second: 0.006
+timeouts: 8822
+dirty_delivered: 4
+dirty_delivered_ours: 4
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 128.846
+control_stall_max_ms: 22.104
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 15
+daemon_percentiles: withheld, only 15 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 3
+consumer_percentiles: withheld, only 3 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 9 (typescript)
+consumer shard 9 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 9 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15671.519
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.093
+anchor_market: lazio-and-ac-milan-both-to-score-1788600615544
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 11
+samples_kept: 130
+percentiles: withheld, only 130 kept samples (floor is 1000)
+wakes: 151
+wakes_per_second: 0.168
+timeouts: 8769
+dirty_delivered: 178
+dirty_delivered_ours: 178
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.175
+control_stall_max_ms: 0.086
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 145
+daemon_percentiles: withheld, only 145 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 130
+consumer_percentiles: withheld, only 130 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 10 (python)
+consumer shard 10 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 10 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.023
+anchor_market: lorient-and-toulouse-have-3-or-more-total-goals-1788600607752
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 11
+samples_kept: 22
+percentiles: withheld, only 22 kept samples (floor is 1000)
+wakes: 25
+wakes_per_second: 0.028
+timeouts: 8813
+dirty_delivered: 24
+dirty_delivered_ours: 24
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 124.719
+control_stall_max_ms: 22.018
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 48
+daemon_percentiles: withheld, only 48 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 22
+consumer_percentiles: withheld, only 22 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 11 (typescript)
+consumer shard 11 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 11 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 900
+clock_divergence_ns_per_s: 15681.477
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.044
+anchor_market: namibia-vs-south-africa-1788681605027
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 12
+samples_kept: 446
+percentiles: withheld, only 446 kept samples (floor is 1000)
+wakes: 603
+wakes_per_second: 0.670
+timeouts: 8604
+dirty_delivered: 884
+dirty_delivered_ours: 884
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.370
+control_stall_max_ms: 0.108
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 467
+daemon_percentiles: withheld, only 467 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 446
+consumer_percentiles: withheld, only 446 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 12 (python)
+consumer shard 12 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 12 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.006
+anchor_market: paris-saint-germain-and-slovan-bratislava-both-to-score-1788175617444
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 14
+samples_kept: 120
+percentiles: withheld, only 120 kept samples (floor is 1000)
+wakes: 136
+wakes_per_second: 0.151
+timeouts: 8769
+dirty_delivered: 152
+dirty_delivered_ours: 152
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 126.238
+control_stall_max_ms: 21.922
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 135
+daemon_percentiles: withheld, only 135 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 120
+consumer_percentiles: withheld, only 120 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 13 (typescript)
+consumer shard 13 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 13 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15687.497
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.045
+anchor_market: real-madrid-and-inter-both-to-score-1788175615831
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 8
+samples_kept: 33
+percentiles: withheld, only 33 kept samples (floor is 1000)
+wakes: 36
+wakes_per_second: 0.040
+timeouts: 8819
+dirty_delivered: 35
+dirty_delivered_ours: 35
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.307
+control_stall_max_ms: 0.094
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 47
+daemon_percentiles: withheld, only 47 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 33
+consumer_percentiles: withheld, only 33 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 14 (python)
+consumer shard 14 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 14 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.044
+anchor_market: sevilla-and-valencia-both-to-score-1788514201135
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 15
+samples_kept: 388
+percentiles: withheld, only 388 kept samples (floor is 1000)
+wakes: 454
+wakes_per_second: 0.504
+timeouts: 8642
+dirty_delivered: 529
+dirty_delivered_ours: 529
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 131.926
+control_stall_max_ms: 20.708
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 411
+daemon_percentiles: withheld, only 411 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 388
+consumer_percentiles: withheld, only 388 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 15 (typescript)
+consumer shard 15 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 15 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 900
+clock_divergence_ns_per_s: 15698.059
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.054
+anchor_market: sui-up-or-down-daily-1788624000
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 9
+samples_kept: 347
+percentiles: withheld, only 347 kept samples (floor is 1000)
+wakes: 385
+wakes_per_second: 0.428
+timeouts: 8669
+dirty_delivered: 428
+dirty_delivered_ours: 428
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 1.686
+control_stall_max_ms: 0.110
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 361
+daemon_percentiles: withheld, only 361 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 347
+consumer_percentiles: withheld, only 347 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 16 (python)
+consumer shard 16 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 16 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.016
+anchor_market: ucl-napoli-vs-arsenal-1788175388487
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 4
+samples_kept: 3
+percentiles: withheld, only 3 kept samples (floor is 1000)
+wakes: 5
+wakes_per_second: 0.006
+timeouts: 8821
+dirty_delivered: 4
+dirty_delivered_ours: 4
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 129.847
+control_stall_max_ms: 22.542
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 19
+daemon_percentiles: withheld, only 19 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 3
+consumer_percentiles: withheld, only 3 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 17 (typescript)
+consumer shard 17 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 17 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15666.261
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.048
+anchor_market: vfb-stuttgart-and-viking-have-3-or-more-total-goals-1788175606930
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 2
+samples_kept: 1
+percentiles: withheld, only 1 kept samples (floor is 1000)
+wakes: 3
+wakes_per_second: 0.003
+timeouts: 8833
+dirty_delivered: 2
+dirty_delivered_ours: 2
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 2.382
+control_stall_max_ms: 0.271
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 7
+daemon_percentiles: withheld, only 7 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 1
+consumer_percentiles: withheld, only 1 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 18 (python)
+consumer shard 18 (python) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), python binding consumer, shard 18 of 20
+consumer: bench_consumer.py
+runtime: python 3.14.5
+mode: parked
+spin_budget_us: 0
+clock: CLOCK_REALTIME epoch nanoseconds, read directly (time.time_ns)
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.028
+anchor_market: will-base-launch-a-token-by-1779881416966
+markets_leased_peak: 28
+markets_held: 28
+markets_seen: 5
+samples_kept: 54
+percentiles: withheld, only 54 kept samples (floor is 1000)
+wakes: 67
+wakes_per_second: 0.074
+timeouts: 8794
+dirty_delivered: 77
+dirty_delivered_ours: 77
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_after_control: 28
+transient_event_faults: 0
+continuity_losses: 0
+lease_renewals: 0
+lease_renew_failures: 0
+anchor_renewals: 177
+anchor_renew_failures: 0
+lease_attach_failures: 0
+control_stall_count: 27
+control_stall_total_ms: 131.024
+control_stall_max_ms: 22.338
+resolutions_observed: 0
+leases_released_on_resolution: 0
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 0
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process (no consumer clock is involved)
+daemon_samples_kept: 75
+daemon_percentiles: withheld, only 75 kept samples (floor is 1000)
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 54
+consumer_percentiles: withheld, only 54 kept samples (floor is 1000)
+consumer_samples_discarded: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## consumer: shard 19 (typescript)
+consumer shard 19 (typescript) exit 0
+label: M1 MacBook Pro (Apple M1, 16 GiB, macOS 25.5), typescript binding consumer, shard 19 of 20
+consumer: bench_consumer.ts
+runtime: node v22.19.0
+mode: parked
+spin_budget_us: 0
+clock: monotonic process.hrtime.bigint plus a millisecond-edge calibrated offset, recalibrated once a second off the measured thread
+clock_derivations: 901
+clock_divergence_ns_per_s: 15682.47
+clock_steps_detected: 0
+clock_calibrations_rejected: 0
+lease_ttl_ms: 30000
+renew_interval_ms: 5000
+duration_seconds: 900.068
+anchor_market: will-the-us-confirm-that-aliens-exist-by-1787671443088
+markets_leased_peak: 20
+markets_held: 22
+markets_seen: 22
+samples_kept: 2849
+p50_us: 688
+p95_us: 1536
+p99_us: 2692
+p99.9_us: 16647
+max_us: 50895
+wakes: 3028
+wakes_per_second: 3.364
+timeouts: 7987
+dirty_delivered: 4586
+dirty_delivered_ours: 4586
+rescans: 0
+samples_skipped: 0
+samples_discarded: 0
+samples_discarded_clock_step: 0
+samples_after_control: 98
+transient_event_faults: 0
+continuity_losses: 825
+lease_renewals: 0
+lease_renew_failures: 0
+lease_attach_failures: 0
+anchor_renewals: 178
+anchor_renew_failures: 0
+control_stall_count: 23
+control_stall_total_ms: 5.573
+control_stall_max_ms: 0.977
+resolutions_observed: 2
+leases_released_on_resolution: 2
+anchor_resolutions_unreleased: 0
+slugs_added_midrun: 8
+daemon_latency: commit_time - arrival_time, both stamped by the daemon on one clock in one process -- this consumer's derived clock, and every calibration and step it carries, has nothing to do with it
+daemon_samples_kept: 2874
+daemon_p50_us: 357
+daemon_p95_us: 966
+daemon_p99_us: 1657
+daemon_p99.9_us: 2987
+daemon_max_us: 7513
+daemon_samples_discarded: 0
+consumer_latency: observation - commit_time
+consumer_samples_kept: 2849
+consumer_p50_us: 297
+consumer_p95_us: 720
+consumer_p99_us: 1742
+consumer_p99.9_us: 11044
+consumer_max_us: 50372
+consumer_samples_discarded: 0
+consumer_samples_discarded_clock_step: 0
+end_to_end: observation - arrival_time, reported above as samples_kept and p50_us through max_us
+
+## deviation from ship wording
+S8 ship wording says one Python and one TypeScript consumer; a consumer session maps one
+shard's segment, so a 20-shard fleet is observed by 10 Python + 10 TypeScript single-segment
+consumers, one per shard.
