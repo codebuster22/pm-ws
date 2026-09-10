@@ -614,21 +614,17 @@ async fn a_daemon_replaces_a_socket_its_predecessor_abandoned() {
     let config = write_config_with(UNROUTABLE_ENDPOINT, socket.as_path(), &[MARKET_A], "");
     let abandoned = Daemon::start(config, socket.clone()).await;
     await_serving(socket.as_path()).await;
-    let first = std::fs::symlink_metadata(socket.as_path())
-        .map(|metadata| metadata.ino())
-        .expect("the socket exists");
     abandoned.abandon().await;
     assert!(socket.exists(), "the killed daemon left its socket behind");
 
     let replacement = write_config_with(UNROUTABLE_ENDPOINT, socket.as_path(), &[MARKET_A], "");
     let successor = Daemon::start(replacement, socket.clone()).await;
     await_serving(socket.as_path()).await;
-    let second = std::fs::symlink_metadata(socket.as_path())
-        .map(|metadata| metadata.ino())
-        .expect("the socket exists");
-    assert_ne!(
-        first, second,
-        "the stale socket was replaced rather than reused"
+    let serving = status(socket.as_path()).await;
+    assert_eq!(
+        serving.pid,
+        successor.pid(),
+        "the successor serves the socket its predecessor abandoned"
     );
     let code = successor.terminate().await;
     assert_eq!(code, 0);
